@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>todo app</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+        integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+</head>
+<style>
+    body {
+        margin: 0;
+        padding: 0;
+
+        background-color: #e39af5;
+    }
+
+    center {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+
+    }
+
+    h2 {
+
+        margin-bottom: 20px;
+    }
+
+    .todo {
+        margin-top: 4vh;
+        background: white;
+        padding: 20px;
+        box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+        text-align: center;
+        border-radius: 2vh;
+        width: 320px;
+    }
+
+    .ull {
+        list-style: none;
+        padding: 0;
+    }
+
+    .ull li {
+
+        display: flex;
+        align-items: center;
+        padding: 8px;
+        border-bottom: 1px solid #ccc;
+    }
+
+    .ull li button {
+
+        margin-left: 5px;
+        background: none;
+        border: none;
+        cursor: pointer;
+    }
+
+    .form-control {
+        width: 100%;
+        padding: 8px;
+        margin-top: 10px;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+    }
+
+    button {
+        display: flex;
+        margin-top: 10px;
+        padding: 8px 12px;
+        border: none;
+        background-color: #007bff;
+        color: rgb(0, 0, 0);
+        border-radius: 5px;
+
+    }
+
+    .fa-trash {
+        justify-content: end;
+        color: rgb(255, 0, 0);
+    }
+
+    .fa-pen {
+        color: rgb(255, 0, 0);
+    }
+
+    .search input {
+        padding: 6px;
+        width: 270px;
+        margin-bottom: 15px;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+    }
+
+    ul#ul li {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 8px 12px;
+        margin: 5px 0;
+    }
+
+    @media (max-width: 500px) {
+        .todo {
+            width: 80%;
+        }
+
+        .search input {
+            width: 80%;
+        }
+
+        button {
+            width: 80%;
+        }
+    }
+
+    @media (max-width: 300px) {
+        .todo {
+            width: 60%;
+        }
+
+        .search input {
+            width: 60%;
+        }
+
+        button {
+            width: 60%;
+        }
+    }
+
+    .bn {
+        display: flex;
+        gap: 1vh;
+    }
+</style>
+</style>
+
+<body>
+    <center>
+        <h2>TODO LIST</h2>
+        <div id="searchBox" class="search">
+            <input type="text" id="searchInput" placeholder="search todo">
+            <button onclick="searchTodo()">search</button>
+        </div>
+        <div class="todo">
+            <ul class="ull" id="ul"> </ul>
+            <input id="inpu" class="form-control" type="text" placeholder="add new todo">
+        </div>
+        <div class="bn"> <button onclick="send()">send</button>
+            <button onclick="de()">delete</button>
+        </div>
+    </center>
+
+    <script>
+        function de() {
+            getul.innerHTML = ''
+        }
+        var getInp = document.getElementById('inpu')
+        var getul = document.getElementById('ul')
+        function send() {
+            getul.innerHTML += `<li> ${getInp.value} <div>
+                <button onclick='editItem(this)' ><i class="fa-solid fa-pen"></i> </button> <button onclick='this.parentNode.parentNode.remove()'><i class="fa-solid fa-trash"></i>
+                    </button></div> </li>`
+            getInp.value = ''
+
+        }
+        function editItem(e) {
+            var getValue = prompt("Enter updated value", e.parentNode.firstChild.textContent)
+            e.parentNode.firstChild.textContent = getValue
+        }
+        function searchTodo() {
+            var searchText = document.getElementById('searchInput').value.toLowerCase();
+            var items = document.querySelectorAll('#ul li');
+
+            items.forEach(function (item) {
+                var itemText = item.childNodes[0].textContent.toLowerCase();
+                if (itemText.includes(searchText)) {
+                    item.style.display = 'flex';
+                } else {
+                    item.style.display = 'none'
+
+                }
+            });
+        }
+        document.getElementById('inpu').addEventListener('keydown', function (event) {
+            if (event.key === 'Enter') {
+                send();
+            }
+        });
+        document.getElementById('searchInput').addEventListener('keydown', function (event) {
+            if (event.key === 'Enter') {
+                searchTodo();
+            }
+        });
+
+
+    </script>
+</body>
+
+</html>
